@@ -2,4 +2,4 @@
 nature: adj.
 domaine: Soutenu
 ---
-Relatif à l'atrabile. Qui se fâche facilement.
+D'humeur sombre et irritable. De l'atrabile (bile noire), humeur censée provoquer la mélancolie dans la médecine ancienne.

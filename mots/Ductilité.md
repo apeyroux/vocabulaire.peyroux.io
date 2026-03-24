@@ -2,4 +2,4 @@
 nature: n.f.
 domaine: Technique
 ---
-Propriété des métaux, des corps ductiles.
+Propriété d'un matériau qui peut être étiré, allongé ou déformé sans se rompre. Se dit surtout des métaux.

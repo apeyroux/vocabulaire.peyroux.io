@@ -2,4 +2,4 @@
 nature: n.m.
 domaine: Religion
 ---
-Membre d'une secte. Personne qui enseigne les croyances d'une secte.
+Adepte d'une doctrine, partisan zélé d'une opinion ou d'un chef. Membre d'une secte.

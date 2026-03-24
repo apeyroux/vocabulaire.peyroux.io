@@ -2,4 +2,4 @@
 nature: adj.
 domaine: Soutenu
 ---
-Craintif par rapport aux responsabilités.
+Qui manque de courage, de fermeté d'âme ; timide à l'excès devant le danger ou les décisions.

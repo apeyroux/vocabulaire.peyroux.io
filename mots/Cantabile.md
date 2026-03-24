@@ -2,4 +2,4 @@
 nature: adv.
 domaine: Musique
 ---
-Avec beaucoup d'expression, de mélancolie.
+Indication musicale demandant un jeu chantant, souple et expressif. De l'italien : qui peut être chanté.
