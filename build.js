@@ -36,7 +36,7 @@ function parseWord(filename, content) {
     }
   }
 
-  return {
+  const result = {
     word,
     nature: meta.nature || '',
     domain: meta.domaine || '',
@@ -44,6 +44,9 @@ function parseWord(filename, content) {
     extra: meta.extra || '',
     examples,
   };
+  if (meta.source) result.source = meta.source;
+  if (meta.tag) result.tag = meta.tag;
+  return result;
 }
 
 const files = fs.readdirSync(MOTS_DIR).filter(f => f.endsWith('.md'));

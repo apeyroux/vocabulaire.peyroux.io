@@ -282,6 +282,28 @@ body::before {
   font-weight: 500;
 }
 
+.card-extra .source {
+  font-family: 'Spectral', serif;
+  font-size: 0.8rem;
+  color: var(--light-muted);
+  margin-top: 0.75rem;
+  font-style: italic;
+}
+
+.card-tag {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  font-family: 'Spectral', serif;
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--light-muted);
+  border: 1px solid var(--border);
+  padding: 0.15rem 0.4rem;
+  border-radius: 1px;
+}
+
 /* Letter separator */
 .letter-sep {
   grid-column: 1 / -1;
@@ -577,9 +599,13 @@ function renderGrid() {
     if (w.extra) {
       extraHtml += `<div class="synonyms">${w.extra}</div>`;
     }
+    if (w.source) {
+      extraHtml += `<div class="source">${w.source}</div>`;
+    }
 
     html += `
       <div class="card" style="animation-delay:${delay}s" onclick="this.classList.toggle('expanded')">
+        ${w.tag ? `<div class="card-tag">${w.tag}</div>` : ''}
         <div class="card-domain">${w.domain}</div>
         <div class="card-word">${w.word}</div>
         <div class="card-nature">${w.nature}</div>
