@@ -1,0 +1,10 @@
+name = "vocabulaire"
+compatibility_date = "2026-03-20"
+
+# Sous-domaine personnalisé sur peyroux.io
+routes = [
+  { pattern = "vocabulaire.peyroux.io", custom_domain = true }
+]
+
+[assets]
+directory = "./public"

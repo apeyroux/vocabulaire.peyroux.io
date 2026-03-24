@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vocabulaire</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Spectral:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #1a1512;
+  --paper: #f5f0e8;
+  --paper-warm: #efe8db;
+  --paper-dark: #e8dfd0;
+  --accent: #8b4513;
+  --accent-light: #a0522d;
+  --accent-muted: #c4956a;
+  --gold: #b8860b;
+  --gold-light: #daa520;
+  --muted: #6b5b4f;
+  --light-muted: #9b8b7f;
+  --border: #d4c8b8;
+  --shadow: rgba(26, 21, 18, 0.08);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: 'Spectral', serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Texture overlay */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: url("data:image/svg+xml,%3Csvg width='200' height='200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 1000;
+}
+
+/* Header */
+.header {
+  text-align: center;
+  padding: 4rem 2rem 3rem;
+  position: relative;
+  border-bottom: 1px solid var(--border);
+}
+
+.header::after {
+  content: '';
+  display: block;
+  font-size: 1.5rem;
+  color: var(--accent-muted);
+  margin-top: 1.5rem;
+  letter-spacing: 0.5em;
+}
+
+.header h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300;
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--ink);
+  margin-bottom: 0.5rem;
+}
+
+.header .count {
+  font-family: 'Spectral', serif;
+  font-size: 0.85rem;
+  color: var(--light-muted);
+  margin-top: 0.75rem;
+  letter-spacing: 0.08em;
+}
+
+/* Search & Filters */
+.controls {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem 2rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.search-wrap {
+  position: relative;
+}
+
+.search-wrap::before {
+  content: '\u26B2';
+  position: absolute;
+  left: 1.25rem;
+  top: 50%;
+  transform: translateY(-50%) rotate(-45deg);
+  font-size: 1.2rem;
+  color: var(--light-muted);
+}
+
+.search-input {
+  width: 100%;
+  padding: 1rem 1.25rem 1rem 3rem;
+  font-family: 'EB Garamond', serif;
+  font-size: 1.1rem;
+  border: 1px solid var(--border);
+  background: var(--paper-warm);
+  color: var(--ink);
+  border-radius: 2px;
+  outline: none;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.search-input::placeholder {
+  color: var(--light-muted);
+  font-style: italic;
+}
+
+.search-input:focus {
+  border-color: var(--accent-muted);
+  box-shadow: 0 0 0 3px rgba(139, 69, 19, 0.08);
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.tag {
+  font-family: 'Spectral', serif;
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+  padding: 0.4rem 0.9rem;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  transition: all 0.25s;
+  border-radius: 1px;
+}
+
+.tag:hover {
+  border-color: var(--accent-muted);
+  color: var(--accent);
+}
+
+.tag.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--paper);
+}
+
+/* Grid */
+.grid {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.5rem;
+}
+
+/* Card */
+.card {
+  background: var(--paper-warm);
+  border: 1px solid var(--border);
+  padding: 1.75rem 1.75rem 1.5rem;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.35s cubic-bezier(0.25, 0.1, 0.25, 1);
+  overflow: hidden;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 3px;
+  height: 0;
+  background: linear-gradient(180deg, var(--gold), var(--accent));
+  transition: height 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+.card:hover {
+  border-color: var(--accent-muted);
+  box-shadow: 0 4px 20px var(--shadow), 0 1px 4px var(--shadow);
+  transform: translateY(-2px);
+}
+
+.card:hover::before {
+  height: 100%;
+}
+
+.card-domain {
+  font-family: 'Spectral', serif;
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent-muted);
+  margin-bottom: 0.6rem;
+}
+
+.card-word {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 600;
+  font-size: 1.6rem;
+  color: var(--ink);
+  margin-bottom: 0.15rem;
+  line-height: 1.2;
+}
+
+.card-nature {
+  font-family: 'EB Garamond', serif;
+  font-style: italic;
+  font-size: 0.85rem;
+  color: var(--light-muted);
+  margin-bottom: 0.75rem;
+}
+
+.card-def {
+  font-family: 'Spectral', serif;
+  font-size: 0.92rem;
+  line-height: 1.65;
+  color: var(--muted);
+}
+
+.card-def .highlight {
+  color: var(--ink);
+  font-weight: 500;
+}
+
+/* Expanded card */
+.card.expanded .card-extra {
+  display: block;
+}
+
+.card-extra {
+  display: none;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+}
+
+.card-extra .example {
+  font-family: 'EB Garamond', serif;
+  font-style: italic;
+  font-size: 0.9rem;
+  color: var(--muted);
+  margin-top: 0.5rem;
+  padding-left: 1rem;
+  border-left: 2px solid var(--accent-muted);
+  line-height: 1.6;
+}
+
+.card-extra .synonyms {
+  font-size: 0.82rem;
+  color: var(--light-muted);
+  margin-top: 0.75rem;
+}
+
+.card-extra .synonyms strong {
+  color: var(--muted);
+  font-weight: 500;
+}
+
+/* Letter separator */
+.letter-sep {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1rem 0 0.5rem;
+}
+
+.letter-sep span {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300;
+  font-size: 2.5rem;
+  color: var(--accent);
+  line-height: 1;
+}
+
+.letter-sep::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, var(--border), transparent);
+}
+
+/* No results */
+.no-results {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 4rem 2rem;
+  font-family: 'EB Garamond', serif;
+  font-style: italic;
+  font-size: 1.2rem;
+  color: var(--light-muted);
+}
+
+/* Footer */
+.footer {
+  text-align: center;
+  padding: 3rem 2rem 4rem;
+  font-family: 'Spectral', serif;
+  font-size: 0.8rem;
+  color: var(--light-muted);
+  letter-spacing: 0.05em;
+  border-top: 1px solid var(--border);
+  margin-top: 2rem;
+}
+
+/* Alphabet nav */
+.alpha-nav {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.alpha-btn {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1rem;
+  font-weight: 500;
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  transition: all 0.2s;
+  border-radius: 1px;
+}
+
+.alpha-btn:hover {
+  color: var(--accent);
+  background: var(--paper-dark);
+}
+
+.alpha-btn.active {
+  color: var(--paper);
+  background: var(--accent);
+}
+
+.alpha-btn.disabled {
+  color: var(--border);
+  cursor: default;
+}
+
+/* View toggle */
+.view-toggle {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.view-btn {
+  font-family: 'Spectral', serif;
+  font-size: 0.8rem;
+  padding: 0.35rem 0.75rem;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.view-btn.active {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--paper);
+}
+
+/* List view */
+.grid.list-view {
+  grid-template-columns: 1fr;
+  max-width: 750px;
+  gap: 0;
+}
+
+.grid.list-view .card {
+  border-left: none;
+  border-right: none;
+  border-bottom: none;
+  padding: 1.25rem 1.5rem;
+}
+
+.grid.list-view .card:last-child {
+  border-bottom: 1px solid var(--border);
+}
+
+.grid.list-view .card::before { display: none; }
+
+.grid.list-view .card:hover {
+  transform: none;
+  box-shadow: none;
+  background: var(--paper-dark);
+}
+
+/* Animations */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.card {
+  animation: fadeUp 0.4s ease both;
+}
+
+/* Responsive */
+@media (max-width: 680px) {
+  .grid {
+    grid-template-columns: 1fr;
+    padding: 1rem;
+    gap: 1rem;
+  }
+  .header { padding: 3rem 1.5rem 2rem; }
+  .card { padding: 1.25rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Vocabulaire</h1>
+  <div class="count" id="count"></div>
+</div>
+
+<div class="controls">
+  <div class="search-wrap">
+    <input type="text" class="search-input" id="search" placeholder="Rechercher un mot, une définition…" autocomplete="off">
+  </div>
+  <div class="tags" id="tags"></div>
+  <div class="alpha-nav" id="alphaNav"></div>
+  <div class="view-toggle">
+    <button class="view-btn active" data-view="grid">Grille</button>
+    <button class="view-btn" data-view="list">Liste</button>
+  </div>
+</div>
+
+<div class="grid" id="grid"></div>
+
+<div class="footer">vocabulaire.peyroux.io</div>
+
+<script>
+const WORDS = __WORDS_DATA__;
+
+// Extract unique domains
+function getDomains() {
+  const all = new Set();
+  WORDS.forEach(w => {
+    w.domain.split('\u00b7').forEach(d => all.add(d.trim()));
+  });
+  return [...all].sort();
+}
+
+const domains = getDomains();
+let activeDomains = new Set();
+let activeLetter = null;
+let searchQuery = '';
+let viewMode = 'grid';
+
+// Render tags
+function renderTags() {
+  const el = document.getElementById('tags');
+  const topDomains = ['Antiquit\u00e9', 'Soutenu', 'Philosophie', 'Religion', 'Beaux-Arts', 'Histoire', 'M\u00e9decine', 'Linguistique', 'Rh\u00e9torique', 'Litt\u00e9rature', 'Courant', 'Vieilli'];
+  el.innerHTML = topDomains.map(d =>
+    `<button class="tag${activeDomains.has(d) ? ' active' : ''}" data-domain="${d}">${d}</button>`
+  ).join('');
+  el.querySelectorAll('.tag').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const d = btn.dataset.domain;
+      if (activeDomains.has(d)) activeDomains.delete(d);
+      else activeDomains.add(d);
+      renderTags();
+      renderGrid();
+    });
+  });
+}
+
+// Alpha nav
+function renderAlpha() {
+  const letters = new Set(WORDS.map(w => w.word[0].toUpperCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')));
+  const el = document.getElementById('alphaNav');
+  const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+  el.innerHTML = alphabet.map(l => {
+    const has = letters.has(l);
+    const isActive = activeLetter === l;
+    return `<button class="alpha-btn${isActive ? ' active' : ''}${!has ? ' disabled' : ''}" data-letter="${l}" ${!has ? 'disabled' : ''}>${l}</button>`;
+  }).join('');
+  el.querySelectorAll('.alpha-btn:not(.disabled)').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const l = btn.dataset.letter;
+      activeLetter = activeLetter === l ? null : l;
+      renderAlpha();
+      renderGrid();
+    });
+  });
+}
+
+function normalize(str) {
+  return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+}
+
+function filterWords() {
+  return WORDS.filter(w => {
+    if (searchQuery) {
+      const q = normalize(searchQuery);
+      if (!normalize(w.word).includes(q) && !normalize(w.def).includes(q) && !normalize(w.domain).includes(q)) return false;
+    }
+    if (activeDomains.size > 0) {
+      const wDomains = w.domain.split('\u00b7').map(d => d.trim());
+      if (!wDomains.some(d => activeDomains.has(d))) return false;
+    }
+    if (activeLetter) {
+      const first = w.word[0].toUpperCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+      if (first !== activeLetter) return false;
+    }
+    return true;
+  }).sort((a, b) => normalize(a.word).localeCompare(normalize(b.word)));
+}
+
+function renderGrid() {
+  const grid = document.getElementById('grid');
+  const filtered = filterWords();
+  const count = document.getElementById('count');
+  count.textContent = `${filtered.length} mot${filtered.length > 1 ? 's' : ''} sur ${WORDS.length}`;
+
+  grid.className = `grid${viewMode === 'list' ? ' list-view' : ''}`;
+
+  if (filtered.length === 0) {
+    grid.innerHTML = '<div class="no-results">Aucun mot ne correspond \u00e0 votre recherche\u2026</div>';
+    return;
+  }
+
+  let html = '';
+  let currentLetter = '';
+
+  filtered.forEach((w, i) => {
+    const letter = w.word[0].toUpperCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    if (letter !== currentLetter && !searchQuery) {
+      currentLetter = letter;
+      html += `<div class="letter-sep"><span>${letter}</span></div>`;
+    }
+
+    const delay = Math.min(i * 0.03, 0.6);
+    let extraHtml = '';
+    if (w.examples && w.examples.length) {
+      extraHtml += w.examples.map(ex => `<div class="example">${ex}</div>`).join('');
+    }
+    if (w.extra) {
+      extraHtml += `<div class="synonyms">${w.extra}</div>`;
+    }
+
+    html += `
+      <div class="card" style="animation-delay:${delay}s" onclick="this.classList.toggle('expanded')">
+        <div class="card-domain">${w.domain}</div>
+        <div class="card-word">${w.word}</div>
+        <div class="card-nature">${w.nature}</div>
+        <div class="card-def">${w.def}</div>
+        ${extraHtml ? `<div class="card-extra">${extraHtml}</div>` : ''}
+      </div>
+    `;
+  });
+
+  grid.innerHTML = html;
+}
+
+// Search
+document.getElementById('search').addEventListener('input', e => {
+  searchQuery = e.target.value;
+  renderGrid();
+});
+
+// View toggle
+document.querySelectorAll('.view-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    viewMode = btn.dataset.view;
+    renderGrid();
+  });
+});
+
+// Init
+renderTags();
+renderAlpha();
+renderGrid();
+</script>
+</body>
+</html>
